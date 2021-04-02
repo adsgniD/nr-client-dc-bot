@@ -6,7 +6,7 @@ from PIL import Image
 bot = commands.Bot(command_prefix='+')
 
 @bot.command()
-async def cape(ctx):
+async def cape(ctx, mode = "stretch"):
     profileurl = ctx.message.author.avatar_url
 
     r = requests.get(profileurl)
@@ -16,14 +16,18 @@ async def cape(ctx):
 
     Image1copy = Image1.copy()
     Image2 = Image.open('profile.png')
-    Image2copy = Image2.copy()
 
-    Image2copy.thumbnail((80, 80))
+    if mode == "stretch":
+        Image2copy = Image2.copy().resize((80, 127))
+        Image1copy.paste(Image2copy, (8, 8))
 
-    Image1copy.paste(Image2copy, (8, 42))
+    else:
+        Image2copy = Image2.copy()
+        Image2copy.thumbnail((80, 80))
+        Image1copy.paste(Image2copy, (8, 42))
 
     Image1copy.save('out.png')
 
     await ctx.message.reply('by adsgniD#2006', mention_author=True, file=discord.File("out.png"))
 
-bot.run('HEHEHE als ob ich dir meinen token verrate xD')
+bot.run('BULUB.... BLUB...')
